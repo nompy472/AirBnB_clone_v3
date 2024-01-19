@@ -107,3 +107,12 @@ class TestFileStorage(unittest.TestCase):
         storage.save()
         c = storage.count()
         self.assertEqual(len(storage.all()), c)
+
+        # Create an instance of DBStorage
+        storage_instance = DBStorage()
+
+        c = storage_instance.count()
+        self.assertEqual(len(storage_instance.all()), c)
+
+if __name__ == '__main__':
+    unittest.main()
