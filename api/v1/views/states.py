@@ -1,27 +1,25 @@
 #!/usr/bin/python3
-"""Handle all default RestFul API actions for States """
+"""
+Handle all default RestFul API actions for States
+"""
 from models.state import State
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
-from flasgger.utils import swag_from
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_state.yml', methods=['GET'])
 def get_states():
     """
     Retrieving the list of all State objects
     """
-    all_states = storage.all(State).values()
-    list_states = []
-    for state in all_states:
-        list_states.append(state.to_dict())
-    return jsonify(list_states)
+    states = storage.all(State).values()
+    states_list = [state.to_dict() for state in states]
+
+    return jsonify(states_list)
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-@swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def get_state(state_id):
     """ Retrieving a specific State """
     state = storage.get(State, state_id)
@@ -33,7 +31,6 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
-@swag_from('documentation/state/delete_state.yml', methods=['DELETE'])
 def delete_state(state_id):
     """
     Deleting a State Object
@@ -51,7 +48,6 @@ def delete_state(state_id):
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-@swag_from('documentation/state/post_state.yml', methods=['POST'])
 def post_state():
     """
     Creating a State
@@ -69,7 +65,6 @@ def post_state():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-@swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def put_state(state_id):
     """
     Updating a State
