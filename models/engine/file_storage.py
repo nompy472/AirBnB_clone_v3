@@ -65,6 +65,14 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
 
+    def delete_relationship(self, parent, child):
+        """Removes a many-many relationship between two objects"""
+        parent.delete_relationship(child.id)
+
+    def create_relationship(self, parent, child):
+        """Creates a many-many relationship between two objects"""
+        parent.create_relationship(child.id)
+
     def close(self):
         """Calls reload() method for deserializing the JSON file to objects"""
         self.reload()

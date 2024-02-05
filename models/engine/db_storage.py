@@ -74,6 +74,18 @@ class DBStorage:
         if obj is not None:
             self.__session.delete(obj)
 
+    def delete_relationship(self, parent, child):
+        """Removes a many-many relationship between two objects"""
+        parent.delete_relationship(child.id)
+        self.__session.add(parent)
+        self.__session.commit()
+
+    def create_relationship(self, parent, child):
+        """Creates a many-many relationship between two objects"""
+        parent.create_relationship(child.id)
+        self.__session.add(parent)
+        self.__session.commit()
+
     def reload(self):
         """Reloads data from the database"""
         Base.metadata.create_all(self.__engine)

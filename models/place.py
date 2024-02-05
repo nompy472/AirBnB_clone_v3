@@ -1,7 +1,9 @@
 #!/usr/bin/python
 """ holds class Place"""
 import models
+from models import storage
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
@@ -76,3 +78,21 @@ class Place(BaseModel, Base):
                 if amenity.place_id == self.id:
                     amenity_list.append(amenity)
             return amenity_list
+
+    def delete_relationship(self, amenity_id):
+        """Creates a many-many relationship between place and amenity"""
+        if models.storage_t == 'db':
+            amenity = storage.get(Amenity, amenity_id)
+            self.amenities.remove(amenity)
+
+        else:
+            self.amenities.remove(amenity_id)
+
+    def create_relationship(self, amenity_id):
+        """Creates a many-many relationship between place and amenity"""
+        if models.storage_t == 'db':
+            amenity = storage.get(Amenity, amenity_id)
+            self.amenities.append(amenity)
+
+        else:
+            self.amenities.append(amenity_id)
