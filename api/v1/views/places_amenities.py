@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-"""
-Views to handle POST, DELETE and GET RESTful API for the link between
-Place and Amenity objects
-"""
+"""Views to handle POST, DELETE and GET RESTful API for the link between
+Place and Amenity objects"""
 from models import storage
 from models.place import Place
 from models.amenity import Amenity
